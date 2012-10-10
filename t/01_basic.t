@@ -11,7 +11,9 @@ else {
     plan tests => 23;
 }
 
-my $r = DBIx::DSN::Resolver::Cached->new();
+my $r = DBIx::DSN::Resolver::Cached->new(
+    ttl => 30,
+);
 ok($r);
 
 like $r->resolv("dbi:mysql:database=mytbl;host=google.com"),
