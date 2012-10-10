@@ -24,7 +24,7 @@ sub new {
             } else {
                 $RR{$host} = 1;
             }
-            return $cache->[$RR{$host}]
+            return $cached->[$RR{$host}]
         }
         my ($name,$aliases,$addrtype,$length,@addrs)= gethostbyname($host);
         if ( ! defined $name ) {
@@ -35,6 +35,9 @@ sub new {
         $cache->set($host,\@ipaddr,$negative_ttl);
         return $ipaddr[0];
     };
+    $class->SUPER::new(
+        resolver => $resolver
+    );
 }
 
 1;
