@@ -9,3 +9,5 @@ __DATA__
 Masahiro Nagano
 kazeburo {at} gmail.com
 DBIx::DSN::Resolver::Cached
+DNS
+
