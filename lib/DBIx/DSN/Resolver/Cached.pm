@@ -22,7 +22,7 @@ sub new {
                 $RR{$host}++;
                 $RR{$host} = 0 if $RR{$host} >= scalar @$cached;
             } else {
-                $RR{$host} = 1;
+                $RR{$host} = 0;
             }
             return $cached->[$RR{$host}]
         }
@@ -33,6 +33,7 @@ sub new {
         }
         my @ipaddr = map { Socket::inet_ntoa($_) } @addrs;
         $cache->set($host,\@ipaddr,$negative_ttl);
+        $RR{$host} = 0;
         return $ipaddr[0];
     };
     $class->SUPER::new(
@@ -72,6 +73,8 @@ This module allows CACHE resolver response, useful for reduce load of DNS
 Masahiro Nagano E<lt>kazeburo {at} gmail.comE<gt>
 
 =head1 SEE ALSO
+
+L<DBIx::DSN::Resolver>
 
 =head1 LICENSE
 
