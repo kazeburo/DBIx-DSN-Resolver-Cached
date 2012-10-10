@@ -33,8 +33,8 @@ sub new {
         }
         my @ipaddr = map { Socket::inet_ntoa($_) } @addrs;
         $cache->set($host,\@ipaddr,$negative_ttl);
-        $RR{$host} = 0;
-        return $ipaddr[0];
+        $RR{$host} = int(rand(scalar @ipaddr));
+        return $ipaddr[$RR{$host}];
     };
     $class->SUPER::new(
         resolver => $resolver
