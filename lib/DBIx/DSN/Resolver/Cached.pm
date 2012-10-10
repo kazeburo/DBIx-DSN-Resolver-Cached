@@ -43,7 +43,7 @@ __END__
 
 =head1 NAME
 
-DBIx::DSN::Resolver::Cached - Cache resolver for DBIx::DSN::Resolver
+DBIx::DSN::Resolver::Cached - Cached resolver for DBIx::DSN::Resolver
 
 =head1 SYNOPSIS
 
