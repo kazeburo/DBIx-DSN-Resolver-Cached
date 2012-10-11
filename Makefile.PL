@@ -1,5 +1,6 @@
 use inc::Module::Install;
 name 'DBIx-DSN-Resolver-Cached';
+perl_version '5.8.5';
 all_from 'lib/DBIx/DSN/Resolver/Cached.pm';
 
 requires 'DBIx::DSN::Resolver';

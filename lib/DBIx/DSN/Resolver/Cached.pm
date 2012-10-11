@@ -5,7 +5,7 @@ use warnings;
 use parent qw/DBIx::DSN::Resolver/;
 use Cache::Memory::Simple;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 my %RR;
 
 sub new {
@@ -51,7 +51,7 @@ DBIx::DSN::Resolver::Cached - Cached resolver for DBIx::DSN::Resolver
 
 =head1 SYNOPSIS
 
-  use 5.10;
+  use 5.10.0;
   use DBIx::DSN::Resolver::Cached;
 
   sub connect_db {

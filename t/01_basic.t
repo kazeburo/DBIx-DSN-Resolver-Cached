@@ -4,7 +4,7 @@ use DBIx::DSN::Resolver::Cached;
 
 my ($name,$aliases,$addrtype,$length,@addrs)= gethostbyname("google.com");
 
-if( !$name ) {
+if( !$name or $length == 1 ) {
     plan skip_all => 'couldnot resolv google.com';
 }
 else {
