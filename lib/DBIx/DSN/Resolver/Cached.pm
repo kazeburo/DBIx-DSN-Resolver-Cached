@@ -66,7 +66,27 @@ DBIx::DSN::Resolver::Cached - Cached resolver for DBIx::DSN::Resolver
 =head1 DESCRIPTION
 
 DBIx::DSN::Resolver::Cached is extension module of DBIx::DSN::Resolver.
-This module allows CACHE resolver response, useful for reduce load of DNS
+This module allows CACHE resolver response, useful for reduce load of DNS.
+DBIx::DSN::Resolver::Cached also supports DNS-RR
+
+=head1 OPTIONS
+
+=over 4
+
+=item ttl: Int
+
+positive cache ttl in seconds. (default: 5)
+
+=item negative_ttl: Int
+
+negative cache ttl in seconds. (default: 1)
+
+=item cache: Object
+
+Cache object, requires support get and set methods.
+default: Cache::Memory::Simple is used
+
+=back
 
 =head1 AUTHOR
 
@@ -74,7 +94,7 @@ Masahiro Nagano E<lt>kazeburo {at} gmail.comE<gt>
 
 =head1 SEE ALSO
 
-L<DBIx::DSN::Resolver>
+L<DBIx::DSN::Resolver>, L<Cache::Memory::Simple>
 
 =head1 LICENSE
 
