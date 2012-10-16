@@ -5,7 +5,7 @@ use warnings;
 use parent qw/DBIx::DSN::Resolver/;
 use Cache::Memory::Simple;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 my %RR;
 
 sub new {
@@ -32,7 +32,7 @@ sub new {
             return;
         }
         my @ipaddr = map { Socket::inet_ntoa($_) } @addrs;
-        $cache->set($host,\@ipaddr,$negative_ttl);
+        $cache->set($host,\@ipaddr,$ttl);
         $RR{$host} = int(rand(scalar @ipaddr));
         return $ipaddr[$RR{$host}];
     };
