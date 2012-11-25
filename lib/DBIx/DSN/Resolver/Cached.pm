@@ -6,7 +6,7 @@ use parent qw/DBIx::DSN::Resolver Exporter/;
 use Cache::Memory::Simple;
 use Carp;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 our @EXPORT = qw/dsn_resolver/;
 my %RR;
 
