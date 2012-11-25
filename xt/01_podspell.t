@@ -11,3 +11,5 @@ kazeburo {at} gmail.com
 DBIx::DSN::Resolver::Cached
 DNS
 ttl
+Str
+

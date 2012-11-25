@@ -2,10 +2,12 @@ package DBIx::DSN::Resolver::Cached;
 
 use strict;
 use warnings;
-use parent qw/DBIx::DSN::Resolver/;
+use parent qw/DBIx::DSN::Resolver Exporter/;
 use Cache::Memory::Simple;
+use Carp;
 
 our $VERSION = '0.03';
+our @EXPORT = qw/dsn_resolver/;
 my %RR;
 
 sub new {
@@ -39,6 +41,17 @@ sub new {
     $class->SUPER::new(
         resolver => $resolver
     );
+}
+
+
+our $RESOLVER;
+sub dsn_resolver {
+    my $dsn = shift;
+    return unless $dsn;
+    $RESOLVER ||= DBIx::DSN::Resolver::Cached->new();
+    my $resolved = $RESOLVER->resolv($dsn)
+        or croak "Can't resolv dsn: $dsn";
+    return @_ ? ($resolved,@_) : $resolved;
 }
 
 1;
@@ -85,6 +98,29 @@ negative cache ttl in seconds. (default: 1)
 
 Cache object, requires support get and set methods.
 default: Cache::Memory::Simple is used
+
+=back
+
+=head1 FUNCTION
+
+=over 4
+
+=item dsn_resolver($dsn: Str)
+
+shortcut function for 
+
+  state $resolver = DBIx::DSN::Resolver::Cached->new();
+  $resolver->resolv('dbi:mysql:database=mytbl;host=myserver.example')
+
+To customize ttl, negative_ttl and cache object. override $DBIx::DSN::Resolver::Cached::RESOLVER
+
+  my $other_ttl = DBIx::DSN::Resolver::Cached->new(
+        ttl => ..
+  );
+  sub {
+      local $DBIx::DSN::Resolver::Cached::RESOLVER = $other_ttl;
+      dsn_resolver($dsn);
+  }
 
 =back
 

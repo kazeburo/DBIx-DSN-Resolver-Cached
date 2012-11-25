@@ -23,27 +23,19 @@ if( !$name or $length == 1 ) {
     plan skip_all => 'couldnot resolv google.com';
 }
 else {
-    plan tests => 23;
+    plan tests => 3;
 }
 
-my $r = DBIx::DSN::Resolver::Cached->new(
-    ttl => 30,
-);
-ok($r);
-
-like $r->resolv("dbi:mysql:database=mytbl;host=google.com"),
+like dsn_resolver("dbi:mysql:database=mytbl;host=google.com"),
     qr/^dbi:mysql:database=mytbl;host=[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/;
 
 set_dummy(1);
-
-my @dsn;
-for ( 1..20 ) {
-    my $d = $r->resolv("dbi:mysql:database=mytbl;host=google.com");
-    ok($d);
-    push @dsn, $d;
-}
-my %dsn;
-$dsn{$_} = 1 for @dsn;
-is( scalar keys %dsn, scalar @addrs);
+like dsn_resolver("dbi:mysql:database=mytbl;host=google.com"),
+    qr/^dbi:mysql:database=mytbl;host=[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/, 'cached';
 
 
+local $DBIx::DSN::Resolver::Cached::RESOLVER = DBIx::DSN::Resolver::Cached->new();
+eval {
+    dsn_resolver("dbi:mysql:database=mytbl;host=google.com");
+};
+like $@, qr/DUMMY/;
